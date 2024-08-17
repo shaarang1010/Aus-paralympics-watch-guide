@@ -1,0 +1,9 @@
+{
+  "name": "paralympics-2024-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/paralympics-2024-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["paralympics-2024"],
+  "// targets": "to see all targets run: nx show project paralympics-2024-e2e --web",
+  "targets": {}
+}
