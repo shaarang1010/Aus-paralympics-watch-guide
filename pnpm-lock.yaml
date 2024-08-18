@@ -79,6 +79,9 @@ devDependencies:
   '@swc/helpers':
     specifier: ~0.5.11
     version: 0.5.12
+  '@types/express':
+    specifier: ^4.17.21
+    version: 4.17.21
   '@types/jest':
     specifier: ^29.5.12
     version: 29.5.12
