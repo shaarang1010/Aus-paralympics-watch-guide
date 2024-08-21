@@ -16,7 +16,7 @@ router.get('/scraper-sports-list', async (_, res, next) => {
   next();
 });
 
-router.get('/test', (_, res, next) => {
+router.get('/test', (_, res) => {
   res.send({ message: 'Welcome to Scraper API!' });
 });
 
