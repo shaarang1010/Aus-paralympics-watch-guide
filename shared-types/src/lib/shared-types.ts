@@ -1,3 +1,4 @@
-export function sharedTypes(): string {
-  return 'shared-types';
-}
+import { EventDetails } from './event';
+import { Sport } from './sport';
+
+export { EventDetails, Sport };
