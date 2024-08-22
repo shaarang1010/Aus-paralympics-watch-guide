@@ -15,7 +15,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use('/api', router);
 
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 3334;
 const server = app.listen(port, async () => {
   console.log(`Listening at http://localhost:${port}/api`);
 });
