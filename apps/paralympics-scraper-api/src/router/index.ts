@@ -5,7 +5,7 @@ const router = express.Router();
 
 const TIMEOUT = 10000;
 
-router.get('/scraper-sports-list', async (_, res, next) => {
+router.get('/scrape-sports-list', async (_, res, next) => {
   try {
     await scrapeSportsList(TIMEOUT);
     res.json({ message: 'Scraping sports list' });

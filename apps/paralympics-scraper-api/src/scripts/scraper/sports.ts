@@ -20,11 +20,17 @@ export const scrapeSportsList = async (timeout: number) => {
 
   await page.waitForTimeout(timeout);
 
-  const allSports = await page.locator('p.MsoToc1').allTextContents();
+  const allSports = await page.locator('p.MsoToc1 > a:nth-child(1)');
+
+  const count = await allSports.count();
+
+  console.log('Total sports:', count);
+
+  for (let i = 0; i < count; i++) {
+    console.log(await allSports.nth(i).textContent());
+  }
 
   await page.waitForTimeout(timeout);
-
-  console.log(allSports);
 
   await browser.close();
 };
