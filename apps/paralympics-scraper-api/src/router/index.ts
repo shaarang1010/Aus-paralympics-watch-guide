@@ -10,10 +10,7 @@ router.get('/scrape-sports-list', async (_, res, next) => {
   try {
     const allParaSports = await scrapeSportsList(TIMEOUT);
     if (allParaSports.length > 0) {
-      // await writeToFile(
-      //   'sports-list.json',
-      //   JSON.stringify(allParaSports, null, 2)
-      // );
+      await writeToFile('sports-list.json', JSON.stringify(allParaSports));
       console.log(JSON.stringify(allParaSports, null, 2));
     }
     res.json({ message: 'Sports written to file' }).status(200);
