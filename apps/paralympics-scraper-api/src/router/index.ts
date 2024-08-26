@@ -3,6 +3,7 @@ import express from 'express';
 import { scrapeSportsList } from '../scripts/scraper/sports';
 import { writeToFile } from '../lib/writeToFile';
 import { scrapeAusportDirectory } from '../scripts/scraper/ausport';
+import { scrapeXlsx } from '../scripts/xlsx';
 const router = express.Router();
 
 const TIMEOUT = 10000;
@@ -30,6 +31,16 @@ router.get('/scrape-ausport-directory', async (_, res, next) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+router.get('/xlsx-scrape', async (_, res, next) => {
+  try {
+    await scrapeXlsx();
+    res.json({ message: 'XLSX scrape completed' }).status(200);
+  } catch (err) {
+    console.error(err);
+  }
+  next();
 });
 
 router.get('/test', (_, res) => {
