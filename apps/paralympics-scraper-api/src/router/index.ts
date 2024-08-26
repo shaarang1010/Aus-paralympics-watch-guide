@@ -2,6 +2,7 @@ import express from 'express';
 
 import { scrapeSportsList } from '../scripts/scraper/sports';
 import { writeToFile } from '../lib/writeToFile';
+import { scrapeAusportDirectory } from '../scripts/scraper/ausport';
 const router = express.Router();
 
 const TIMEOUT = 10000;
@@ -19,6 +20,16 @@ router.get('/scrape-sports-list', async (_, res, next) => {
     res.json({ message: 'Error scraping sports list' }).status(500);
   }
   next();
+});
+
+router.get('/scrape-ausport-directory', async (_, res, next) => {
+  try {
+    const allSportOrgs = await scrapeAusportDirectory();
+    res.json({ sports: allSportOrgs }).status(200);
+    next();
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 router.get('/test', (_, res) => {
