@@ -1,7 +1,7 @@
 import playwright from 'playwright';
 import type { EventDetails } from '@paralympics-2024/shared-types';
 
-const DEFAULT_TIMEOUT = 10000;
+const DEFAULT_TIMEOUT = 8000;
 const BASE_PARALYMPICS_URL =
   'https://olympics.com/en/paris-2024/paralympic-games/schedule';
 
@@ -31,6 +31,8 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
     const eventsForSport = page.locator('div.competition-day-divider');
 
     const allEvents = await eventsForSport.count();
+
+    const allEventsForSport = [];
 
     for (let i = 0; i < allEvents; i++) {
       const eventDate = await eventsForSport
@@ -63,38 +65,22 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
           .nth(j)
           .locator('div.h2h-competitor')
           .allTextContents();
+
+        allEventsForSport.push({
+          eventDate: eventDate,
+          eventTime: eventTime,
+          eventName: eventName,
+          eventDescription: eventDescription,
+          competitors: competitors.join(' - '),
+        });
       }
     }
-
-    // const eventList = page.locator('[data-cy="events-list"]'); // gets all the events for that sport.
-    // const totalEvents = await eventList.count(); // get the total number of events for that sport.
-
-    // for (let i = 0; i < totalEvents; i++) {
-    //   const eventDateDetails = eventList.locator(
-    //     '[data-cy="sport-schedule-date"]'
-    //   ); // get date details fragment.
-    //   let eventDay = await eventDateDetails
-    //     .nth(i)
-    //     .locator('span.date-wrapper')
-    //     .first()
-    //     .textContent();
-    //   let eventDate = await eventDateDetails.nth(i).locator('h2').textContent();
-    //   let eventMonth = await eventDateDetails
-    //     .nth(i)
-    //     .locator('span.date-wrapper')
-    //     .last()
-    //     .textContent();
-
-    //   const eventDetailsList = eventList
-    //     .nth(i)
-    //     .locator('[data-cy="videos-hero]');
-
-    //   const totalEventDetails = await eventDetailsList.count();
-    //   for (let j = 0; j < totalEventDetails; j++) {
-    //     const eventDetails = eventDetailsList.nth(j)
-    //   }
-    // }
+    console.log(`Finished scraping sport : ${sport}`);
+    allParalympicsGameEvents.push({
+      [sport]: allEventsForSport,
+    });
   }
+  console.log(allParalympicsGameEvents);
 
   await browser.close();
 };

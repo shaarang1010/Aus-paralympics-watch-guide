@@ -4,6 +4,9 @@ import { scrapeSportsList } from '../scripts/scraper/sports';
 import { writeToFile } from '../lib/writeToFile';
 import { scrapeAusportDirectory } from '../scripts/scraper/ausport';
 import { scrapeXlsx } from '../scripts/xlsx';
+import sports from '../assets/sports-list.json';
+import { scrapeEventsSchedule } from '../scripts/scraper/events';
+
 const router = express.Router();
 
 const TIMEOUT = 10000;
@@ -30,6 +33,17 @@ router.get('/scrape-ausport-directory', async (_, res, next) => {
     next();
   } catch (err) {
     console.error(err);
+  }
+});
+
+router.get('/scrape-paralympic-events', async (_, res, next) => {
+  try {
+    console.log(sports.map((s) => s.name));
+    await scrapeEventsSchedule(['blind-football']);
+    res.json({ message: 'Events scraped' }).status(200);
+  } catch (err) {
+    console.error(err);
+    res.json({ message: 'Error scraping events' }).status(500);
   }
 });
 
