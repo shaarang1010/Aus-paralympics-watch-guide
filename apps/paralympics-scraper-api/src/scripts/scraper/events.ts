@@ -1,12 +1,12 @@
 import playwright from 'playwright';
 import type { EventDetails } from '@paralympics-2024/shared-types';
 
-const DEFAULT_TIMEOUT = 8000;
+const DEFAULT_TIMEOUT = 10000;
 const BASE_PARALYMPICS_URL =
   'https://olympics.com/en/paris-2024/paralympic-games/schedule';
 
 export const scrapeEventsSchedule = async (sportsList: string[]) => {
-  const browser = await playwright.chromium.launch({ headless: true });
+  const browser = await playwright.chromium.launch({ headless: false });
   const context = await browser.newContext(); // launch clean browser context.
 
   const page = await context.newPage(); // create a new page.
@@ -17,8 +17,10 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
 
   for (const sport of sportsList) {
     await page.goto(`${BASE_PARALYMPICS_URL}/${sport}`, {
-      timeout: 2 * 60 * 1000,
+      waitUntil: 'networkidle',
     });
+
+    console.log(page.url);
 
     await page.waitForTimeout(DEFAULT_TIMEOUT); // wait for the page to load.
 
@@ -32,6 +34,8 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
 
     const allEvents = await eventsForSport.count();
 
+    console.log('All events ==>' + allEvents);
+
     const allEventsForSport = [];
 
     for (let i = 0; i < allEvents; i++) {
@@ -40,6 +44,8 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
         .locator('span > time')
         .first()
         .textContent();
+
+      console.log('Event Date ==>' + eventDate);
 
       const eventsOnDay = eventsForSport
         .nth(i)
@@ -66,13 +72,17 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
           .locator('div.h2h-competitor')
           .allTextContents();
 
-        allEventsForSport.push({
+        const allData = {
           eventDate: eventDate,
           eventTime: eventTime,
           eventName: eventName,
           eventDescription: eventDescription,
           competitors: competitors.join(' - '),
-        });
+        };
+
+        console.log(allData);
+
+        allEventsForSport.push(allData);
       }
     }
     console.log(`Finished scraping sport : ${sport}`);
@@ -84,3 +94,5 @@ export const scrapeEventsSchedule = async (sportsList: string[]) => {
 
   await browser.close();
 };
+
+scrapeEventsSchedule(['blind-football']);
