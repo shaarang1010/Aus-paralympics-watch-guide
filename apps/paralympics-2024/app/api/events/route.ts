@@ -1,3 +1,4 @@
+import { EventDetails } from '@paralympics-2024/shared-types';
 import { BASE_API_URL } from '../../../utils/api';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -9,7 +10,7 @@ export async function GET(request: NextRequest) {
 
     const { units } = data;
 
-    const eventData: EventData[] = units.map((unit: EventData) => ({
+    const eventData: EventDetails[] = units.map((unit: EventDetails) => ({
       ...unit,
     }));
 

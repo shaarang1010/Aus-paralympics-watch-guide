@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -41,7 +44,10 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/paralympics-scraper-api-e2e/**/*"]
+      "exclude": [
+        "apps/paralympics-scraper-api-e2e/**/*"
+      ],
+      "transform": {}
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -54,7 +60,9 @@
   ],
   "targetDefaults": {
     "e2e-ci--**/*": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     }
   },
   "generators": {
