@@ -1,4 +1,5 @@
 import './global.css';
+import { ThemeProvider } from '../containers/context/theme-context';
 
 export const metadata = {
   title: 'Welcome to paralympics-2024',
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
