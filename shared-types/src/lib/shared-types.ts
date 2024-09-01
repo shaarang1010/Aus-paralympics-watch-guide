@@ -1,4 +1,4 @@
 import { EventDetails } from './event';
 import { Sport } from './sport';
-
-export { EventDetails, Sport };
+import { Athlete } from './athletes';
+export { EventDetails, Sport, Athlete };
