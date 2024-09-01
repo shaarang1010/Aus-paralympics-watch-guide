@@ -10,12 +10,14 @@ type Props = {
   allAthletes: Array<Athlete>;
   classifications: Array<Pick<Athlete, 'label' | 'value'>>;
   allDisiciplines: Array<Pick<Athlete, 'label' | 'value'>>;
+  allDates: Array<{ label: string; value: string }>;
 };
 
 export const FiltersRow: React.FC<Props> = ({
   allAthletes,
   classifications,
   allDisiciplines,
+  allDates,
 }) => {
   const {
     athletes,
@@ -29,11 +31,11 @@ export const FiltersRow: React.FC<Props> = ({
   } = useContext(FilterContext);
   return (
     <Box>
-      <Columns gap={1.5} cols={{ xs: 1, sm: 1, md: 4 }}>
+      <Columns gap={1.5} cols={{ xs: 1, sm: 1, md: 3 }}>
         <Combobox
           label="Select Date"
           hint="Select competition date"
-          options={allAthletes}
+          options={allDates}
           value={date}
           onChange={(d) => setDate(d!)}
         />
@@ -44,13 +46,13 @@ export const FiltersRow: React.FC<Props> = ({
           value={athletes[0]}
           onChange={(v) => setAtheletes(v!)}
         />
-        <Combobox
+        {/* <Combobox
           label="Choose Classification"
           hint="Select one or more Classifications"
           options={classifications}
           value={classification[0]}
           onChange={(v) => setClassification(v!)}
-        />
+        /> */}
         <Combobox
           label="Choose Discipline"
           hint="Select discipline"

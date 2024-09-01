@@ -1,8 +1,7 @@
-import { Columns } from '@ag.ds-next/react/columns';
-import { Box } from '@ag.ds-next/react/box';
+import { Content } from '@ag.ds-next/react/content';
 import { FiltersRow } from '../../containers/filters';
-import { Athlete } from '@paralympics-2024/shared-types';
 import { getAllDisciplines } from '../../utils/discipline';
+import { getEventDates } from '../../utils/dates';
 
 export default async function Dashbaord() {
   const response = await fetch('http://localhost:3000/api/athletes');
@@ -13,17 +12,20 @@ export default async function Dashbaord() {
   const allAthletes = await response.json();
 
   const allDisicplines = getAllDisciplines().map((d) => ({
-    label: d.name,
+    label: d.name.charAt(0).toUpperCase() + d.name.slice(1).toLowerCase(),
     value: d.id,
   }));
 
+  const allDates = getEventDates();
+
   return (
-    <Box>
+    <Content>
       <FiltersRow
         allAthletes={allAthletes.athletes}
         classifications={[]}
         allDisiciplines={allDisicplines}
+        allDates={allDates}
       />
-    </Box>
+    </Content>
   );
 }
