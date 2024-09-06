@@ -1,6 +1,7 @@
 'use client';
 import { PropsWithChildren, useState } from 'react';
 import { FilterProvider } from '../filter-context';
+import { Athlete } from '@paralympics-2024/shared-types';
 
 type FilterChoiceProps = { label: string; value: string };
 
@@ -17,12 +18,18 @@ export const AppProviders: React.FC<PropsWithChildren> = ({ children }) => {
   const [selectedDiscipline, setSelectedDiscipline] =
     useState<FilterChoiceProps | null>(null);
 
+  const [filteredAthletes, setFilteredAthletes] = useState<Athlete[]>([]);
+
   const setAtheletes = (athlete: FilterChoiceProps) => {
     setSelectedAtheletes([...selectedAthletes, athlete]);
   };
 
   const setClassification = (classification: FilterChoiceProps) => {
     setSelectedClassification([...selectedClassification, classification]);
+  };
+
+  const setAthletes = (athlete: Athlete) => {
+    setFilteredAthletes([...filteredAthletes, athlete]);
   };
   return (
     <FilterProvider
@@ -34,6 +41,8 @@ export const AppProviders: React.FC<PropsWithChildren> = ({ children }) => {
       setDate={setSelectedDate}
       dicipline={selectedDiscipline}
       setDiscipline={setSelectedDiscipline}
+      filteredAthletes={filteredAthletes}
+      setFilteredAthletes={setAthletes}
     >
       {children}
     </FilterProvider>

@@ -1,7 +1,7 @@
 'use client';
 import { Box } from '@ag.ds-next/react/box';
 import { Columns } from '@ag.ds-next/react/columns';
-import { Combobox } from '@ag.ds-next/react/combobox';
+import { Combobox, DefaultComboboxOption } from '@ag.ds-next/react/combobox';
 import { Athlete } from '@paralympics-2024/shared-types';
 import { useContext } from 'react';
 import { FilterContext } from '../context/filter-context';
@@ -28,7 +28,16 @@ export const FiltersRow: React.FC<Props> = ({
     setClassification,
     date,
     setDate,
+    setFilteredAthletes,
   } = useContext(FilterContext);
+
+  const handleAthleteChange = (athlete: DefaultComboboxOption) => {
+    setAtheletes(athlete);
+    const selectedAthelete = allAthletes.find((a) => a.value === athlete.value);
+    if (selectedAthelete) {
+      setFilteredAthletes(selectedAthelete);
+    }
+  };
   return (
     <Box>
       <Columns gap={1.5} cols={{ xs: 1, sm: 1, md: 3 }}>
@@ -44,7 +53,7 @@ export const FiltersRow: React.FC<Props> = ({
           hint="Select one or more athletes"
           options={allAthletes}
           value={athletes[0]}
-          onChange={(v) => setAtheletes(v!)}
+          onChange={(v) => handleAthleteChange(v!)}
         />
         {/* <Combobox
           label="Choose Classification"

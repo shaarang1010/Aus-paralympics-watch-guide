@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren } from 'react';
 import type { DefaultComboboxOption } from '@ag.ds-next/react/combobox';
+import { Athlete } from '@paralympics-2024/shared-types';
 
 type FilterContextType = {
   athletes: DefaultComboboxOption[];
@@ -10,6 +11,8 @@ type FilterContextType = {
   setDate: (date: DefaultComboboxOption) => void;
   dicipline: DefaultComboboxOption | null;
   setDiscipline: (dicipline: DefaultComboboxOption) => void;
+  filteredAthletes: Athlete[];
+  setFilteredAthletes: (athletes: Athlete) => void;
 };
 
 const emptyFunction = () => {
@@ -25,6 +28,8 @@ export const FilterContext = createContext<FilterContextType>({
   setDate: () => emptyFunction,
   dicipline: null,
   setDiscipline: () => emptyFunction,
+  filteredAthletes: [],
+  setFilteredAthletes: () => emptyFunction,
 });
 
 export const FilterProvider: React.FC<PropsWithChildren<FilterContextType>> = ({
@@ -36,6 +41,8 @@ export const FilterProvider: React.FC<PropsWithChildren<FilterContextType>> = ({
   date,
   dicipline,
   classification,
+  filteredAthletes,
+  setFilteredAthletes,
   children,
 }) => {
   return (
@@ -47,6 +54,8 @@ export const FilterProvider: React.FC<PropsWithChildren<FilterContextType>> = ({
         setClassification,
         setDate,
         setDiscipline,
+        setFilteredAthletes,
+        filteredAthletes,
         date,
         dicipline,
       }}
