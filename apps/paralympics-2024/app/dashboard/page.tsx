@@ -9,7 +9,12 @@ export default async function Dashbaord() {
   if (!response.ok) {
     throw new Error('Failed to load athletes');
   }
+
+  const classificationRequest = await fetch(
+    'http://localhost:3000/api/classification'
+  );
   const allAthletes = await response.json();
+  const allClassifications = await classificationRequest.json();
 
   const allDisicplines = getAllDisciplines().map((d) => ({
     label: d.name.charAt(0).toUpperCase() + d.name.slice(1).toLowerCase(),
@@ -22,7 +27,7 @@ export default async function Dashbaord() {
     <Content>
       <FiltersRow
         allAthletes={allAthletes.athletes}
-        classifications={[]}
+        classifications={allClassifications.classifications}
         allDisiciplines={allDisicplines}
         allDates={allDates}
       />

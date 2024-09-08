@@ -1,4 +1,6 @@
 import { Athlete } from '@paralympics-2024/shared-types';
+import flattenDeep from 'lodash/flattenDeep';
+import uniq from 'lodash/uniq';
 
 export const castAthletes = (data: Array<Record<string, string>>) => {
   return data.map(
@@ -16,5 +18,19 @@ export const castAthletes = (data: Array<Record<string, string>>) => {
         postcode: parseInt(athlete['Postcode']),
         city: athlete['Birth Place'],
       } as Athlete)
+  );
+};
+
+export const castClassifications = (data: Array<Record<string, string>>) => {
+  const allClassifications: string[] = [];
+  data.forEach((athlete) => {
+    allClassifications.push(athlete['Classification']);
+  });
+  return uniq(
+    flattenDeep(
+      allClassifications.map((classification) =>
+        classification.toString().split(',')
+      )
+    )
   );
 };

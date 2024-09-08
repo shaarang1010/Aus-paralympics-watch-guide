@@ -38,8 +38,9 @@ export const FiltersRow: React.FC<Props> = ({
       setFilteredAthletes(selectedAthelete);
     }
   };
+
   return (
-    <Box>
+    <Box border padding={1} rounded>
       <Columns gap={1.5} cols={{ xs: 1, sm: 1, md: 3 }}>
         <Combobox
           label="Select Date"
@@ -55,13 +56,13 @@ export const FiltersRow: React.FC<Props> = ({
           value={athletes[0]}
           onChange={(v) => handleAthleteChange(v!)}
         />
-        {/* <Combobox
+        <Combobox
           label="Choose Classification"
           hint="Select one or more Classifications"
           options={classifications}
           value={classification[0]}
           onChange={(v) => setClassification(v!)}
-        /> */}
+        />
         <Combobox
           label="Choose Discipline"
           hint="Select discipline"
