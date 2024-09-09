@@ -24,7 +24,7 @@ export const castAthletes = (data: Array<Record<string, string>>) => {
 export const castClassifications = (data: Array<Record<string, string>>) => {
   const allClassifications: string[] = [];
   data.forEach((athlete) => {
-    allClassifications.push(athlete['Classification']);
+    allClassifications.push(athlete['classification']);
   });
   return uniq(
     flattenDeep(
